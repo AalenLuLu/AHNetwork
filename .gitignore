@@ -1,0 +1,10 @@
+.DS_Store
+
+xcuserdata
+*.xcworkspace
+
+AHNetworkDemoTests
+AHNetworkDemoUITests
+
+Pods
+Podfile.lock
