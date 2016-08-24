@@ -50,9 +50,8 @@
 		_responseSerializer = [AFHTTPResponseSerializer serializer];
 		_manager.responseSerializer = _responseSerializer;
 		
-		_requestList = [[NSMutableDictionary alloc] init];
-		
 		_lock = [[NSLock alloc] init];
+		_requestList = [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
@@ -74,6 +73,7 @@
 	//timeout
 	urlRequest.timeoutInterval = [request timeout];
 	
+	//task
 	__block NSURLSessionDataTask *task = [_manager dataTaskWithRequest: urlRequest completionHandler: ^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
 		NSString *key = [[NSString alloc] initWithFormat: @"%lu", urlRequest.hash];
 		if(error)
@@ -93,9 +93,9 @@
 		_requestList[key] = nil;
 		[_lock unlock];
 	}];
-	
 	request.dataTask = task;
 	
+	//make sure one request
 	NSString *key = [[NSString alloc] initWithFormat: @"%lu", urlRequest.hash];
 	[_lock lock];
 	if(nil == _requestList[key])
