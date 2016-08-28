@@ -101,26 +101,26 @@
 	if(nil == _requestList[key])
 	{
 		_requestList[key] = request;
-		[request start];
+		[task resume];
 	}
 	else if(AHRequestConflictHandleType_CancelBefore == request.conflictHandleType)
 	{
 		AHBaseRequest *oldRequest = _requestList[key];
-		[oldRequest stop];
+		[oldRequest.dataTask cancel];
 		
 		_requestList[key] = request;
-		[request start];
+		[task resume];
 	}
 	else
 	{
-		[request stop];
+		[task cancel];
 	}
 	[_lock unlock];
 }
 
 - (void)cancelRequest:(AHBaseRequest *)request
 {
-	[request stop];
+	[request.dataTask cancel];
 	NSString *key = [[NSString alloc] initWithFormat: @"%lu", request.dataTask.originalRequest.hash];
 	[_lock lock];
 	_requestList[key] = nil;

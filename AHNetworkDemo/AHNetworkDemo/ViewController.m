@@ -24,18 +24,21 @@
 	AHDemoRequest *request = [[AHDemoRequest alloc] init];
 	request.successCompleteBlock = ^(NSURLSessionDataTask *task, id responseObject) {
 		NSLog(@"task: %@", task);
-		NSLog(@"response: %@", [[NSString alloc] initWithData: responseObject encoding: NSUTF8StringEncoding]);
+		NSLog(@"response: %@", task.response);
+		NSLog(@"responseObject: %@", [[NSString alloc] initWithData: responseObject encoding: NSUTF8StringEncoding]);
 	};
 	request.failedCompleteBlock = ^(NSURLSessionDataTask *task, NSError *error) {
 		NSLog(@"task: %@", task);
 		NSLog(@"error: %@", error);
 	};
-	[[AHNetworkManager shareInstance] addRequest: request];
+	request.manager = [AHNetworkManager shareInstance];
+	[request start];
 	
 	[[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(onRequest2Finished:) name: kAHDemoRequestFinishedNotification object: nil];
 	
 	AHDemoRequest2 *request2 = [[AHDemoRequest2 alloc] init];
-	[[AHNetworkManager shareInstance] addRequest: request2];
+	request2.manager = [AHNetworkManager shareInstance];
+	[request2 start];
 }
 
 - (void)didReceiveMemoryWarning {

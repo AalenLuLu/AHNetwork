@@ -8,6 +8,8 @@
 
 #import "AHBaseRequest.h"
 
+#import "AHNetworkManager.h"
+
 @implementation AHBaseRequest
 
 - (void)dealloc
@@ -53,12 +55,12 @@
 
 - (void)start
 {
-	[_dataTask resume];
+	[_manager addRequest: self];
 }
 
 - (void)stop
 {
-	[_dataTask cancel];
+	[_manager cancelRequest: self];
 }
 
 @end

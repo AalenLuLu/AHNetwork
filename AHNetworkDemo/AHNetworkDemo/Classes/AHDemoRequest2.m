@@ -18,7 +18,7 @@ NSString * const kAHDemoRequestFinishedNotification = @"com.aalen.network.demo.r
 	{
 		self.successCompleteBlock = ^(NSURLSessionDataTask *task, id responseObject) {
 			NSLog(@"task: %@", task);
-			NSLog(@"response: %@", [[NSString alloc] initWithData: responseObject encoding: NSUTF8StringEncoding]);
+			NSLog(@"response: %@", task.response);
 			[[NSNotificationCenter defaultCenter] postNotificationName: kAHDemoRequestFinishedNotification object: nil];
 		};
 		self.failedCompleteBlock = ^(NSURLSessionDataTask *task, NSError *error) {
@@ -32,7 +32,7 @@ NSString * const kAHDemoRequestFinishedNotification = @"com.aalen.network.demo.r
 
 - (NSString *)requestURLString
 {
-	return @"https://www.apple.com.hk";
+	return @"https://www.google.com.hk";
 }
 
 @end

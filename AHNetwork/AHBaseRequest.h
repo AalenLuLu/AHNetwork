@@ -16,8 +16,11 @@ typedef NS_ENUM(NSUInteger, AHRequestConflictHandleType) {
 typedef void (^RequestSuccessBlock)(NSURLSessionDataTask *task, id responseObject);
 typedef void (^RequestFailedBlock)(NSURLSessionDataTask *task, NSError *error);
 
+@class AHNetworkManager;
+
 @interface AHBaseRequest : NSObject
 
+@property (weak, nonatomic) AHNetworkManager *manager;
 @property (strong, nonatomic) NSURLSessionDataTask *dataTask;
 @property (copy, nonatomic) RequestSuccessBlock successCompleteBlock;
 @property (copy, nonatomic) RequestFailedBlock failedCompleteBlock;
